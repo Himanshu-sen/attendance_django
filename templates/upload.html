@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<center>
+<h1>ADMIN UPLOAD</h1>
+</center>
+<div class="container">
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <div class="mb-3">
+        <label for="name"><h4>Name</h4></label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+    </div>
+    <div>
+        <label for="dep"><h4>Department</h4></label>
+        <select id ="dep" name = "dep" class="form-select" aria-label="Default select example">
+        <option selected>Biomedical</option>        
+        </select>
+    </div>
+    <div>
+        <label for="yr"><h4>Year</h4></label>
+        <select id = "yr" name = "yr" class="form-select" aria-label="Default select example">
+        <option value ="1" selected>1st year</option>
+        <option value="2">2nd year</option>
+        <option value="3">3rd year</option>
+        <option value="4">4th year</option>
+      </select>
+    </div>
+      <div class="mb-3">
+        <label for="formFile" class="form-label"><h4>Select image</h4></label>
+        <input class="form-control" name = "formFile" type="file" id="formFile">
+      </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+      <!-- Content goes here -->
+    </div>
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <a href="loginuser" class="btn btn-primary">logout</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% comment %} <div>
+  <a href="loginuser">logout</a>
+</div> {% endcomment %}
+{% endblock body %}
+
+
+

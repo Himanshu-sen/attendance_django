@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Camera Input Example</title>
+
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+    
+<video id="video" width="640" height="480" autoplay></video>
+<img id="captured-image" width="640" height="480" style="display: none;">
+<button type="button" class="btn btn-primary" id="snap">Snap Photo</button>
+<canvas id="canvas" width="640" height="480"></canvas>
+  <script>
+    // Get the video element and configure it to use the camera
+    const video = document.getElementById('video');
+    navigator.mediaDevices.getUserMedia({ video: true })
+      .then(stream => {
+        video.srcObject = stream;
+        video.play();
+      });
+
+    // Get the canvas and the button element
+    const canvas = document.getElementById('canvas');
+    const snap = document.getElementById('snap');
+
+    // Set up an event listener for the button click
+    snap.addEventListener('click', () => {
+      // Draw the current video frame onto the canvas
+      const context = canvas.getContext('2d');
+      context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+      // Get the image data from the canvas as a data URL
+      const imageDataUrl = canvas.toDataURL('image/png');
+      console.log(imageDataUrl);
+      
+      const img = new Image();
+      img.src = imageDataUrl;
+
+      // Set the image variable to the new image element
+      const image = img;
+      // Turn off the camera stream
+      const stream = video.srcObject;
+      stream.getTracks().forEach(track => track.stop());
+
+      video.style.display = 'none';
+      const capturedImage = document.getElementById('captured-image');
+      capturedImage.src = imageDataUrl;
+      capturedImage.style.display = 'inline-block';
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>
